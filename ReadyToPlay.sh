@@ -43,12 +43,12 @@ if [ $os = "1" ]; then
     if [ -d "$HOME/.minecraft/versions/forge" ]; then # note: Check if Minecraft Forge is already installed
         echo "Forge Minecraft ya está instalado"
     else
-        echo "Descargando e instalando Forge"
-        sh -c "$(curl -fsSL https://files.minecraftforge.net/maven/net/minecraftforge/forge/1.17.1-37.0.58/forge-1.17.1-37.0.58-installer.jar)" &
+        echo "Descargando e instalando Forge Minecraft 1.20.1-47-1-0"
+        sh -c "$(curl -fsSL https://github.com/DereckAn/minecraft/blob/main/forge-1.20.1-47.1.0-installer.jar)" &
         wait
 
         if [ $? -eq 0 ]; then # note: check if last command was successful
-            echo "Forge instalado con éxito"
+            echo "Minecraft Forge instalado con éxito"
         else
             echo "Error al instalar Forge"
         fi
@@ -72,7 +72,7 @@ fi
 
 
     if [ $? -eq 0 ]; then # check if last command was successful
-        echo "Installing Powerlevel10k"
+        echo "Installing Minecraft mods"
         git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
         sed -i '' 's#robbyrussell#powerlevel10k/powerlevel10k#g' ~/.zshrc
         echo 'ZSH_THEME="powerlevel10k/powerlevel10k"' ~/.zshrc
