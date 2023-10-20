@@ -44,7 +44,7 @@ if [ $os = "1" ]; then
         echo "Forge Minecraft ya está instalado"
     else
         echo "Descargando e instalando Forge Minecraft 1.20.1-47-1-0"
-        sh -c "$(curl -fsSL https://github.com/DereckAn/minecraft/blob/main/forge-1.20.1-47.1.0-installer.jar)" &
+        curl -LJO https://files.minecraftforge.net/maven/net/minecraftforge/forge/1.20.1-47.1.0/forge-1.20.1-47.1.0-installer.jar && java -jar forge-1.20.1-47.1.0-installer.jar --installClient &
         wait
 
         if [ $? -eq 0 ]; then # note: check if last command was successful
@@ -52,121 +52,172 @@ if [ $os = "1" ]; then
         else
             echo "Error al instalar Forge"
         fi
-fi
-
-
-    # ! I think I do not need java SE Development Kit 11.0.21
-    # if [ -d "$HOME/.java" ]; then # note: Check if Java Java SE Development Kit 11.0.21 is already installed 
-    #     echo "Java already installed"
-    # else
-    #     echo "Installing Java - Java SE Development Kit 11.0.21"
-    #     sh -c "$(curl -fsSL https://www.oracle.com/java/technologies/downloads/#license-lightbox)" &
-    #     wait
-
-    #     if [ $? -eq 0 ]; then # note: check if last command was successful
-    #         echo "Successfully Java SE Development Kit 11.0.21"
-    #     else
-    #         echo "Error installing Java SE Development Kit 11.0.21"
-    #     fi
-    # fi
-
-
-    if [ $? -eq 0 ]; then # check if last command was successful
-        echo "Installing Minecraft mods"
-        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-        sed -i '' 's#robbyrussell#powerlevel10k/powerlevel10k#g' ~/.zshrc
-        echo 'ZSH_THEME="powerlevel10k/powerlevel10k"' ~/.zshrc
-        echo "Installing plugins"
-        git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-        git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-        sed -i '' 's/plugins=(git)/plugins=(git jump zsh-autosuggestions sublime zsh-history-substring-search jsontools zsh-syntax-highlighting zsh-interactive-cd)/g' ~/.zshrc
-        echo "Please restart your terminal for changes to take effect"
-        # code for macOS
-    else
-        echo "Error installing Oh My Zsh"
-        exit 1
     fi
 
-    echo "Installing raycast"
-    brew install raycast
+
+
+    if [ $? -eq 0 ]; then 
+        echo "Installing Minecraft mods"
+        # Lista de enlaces a descargar
+        links=(
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/BiomesOPlenty-1.20.1-18.0.0.592.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/Dungeon%2BCrawl-1.20.1-2.3.14.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/DungeonsArise-1.20.1-2.1.56.1-beta.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/HopoBetterMineshaft-%5B1.20-1.20.1%5D-1.1.8.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/MutantMonsters-v8.0.2-1.20.1-Forge.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/Philips-Ruins1.20.1-1.4.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/PuzzlesLib-v8.0.7-1.20.1-Forge.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/Rex's-AdditionalStructures-1.20.x-(v.4.1.2).jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/TerraBlender-forge-1.20.1-3.0.0.169.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/TheHammerMod-1.20.1-beta3.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/Xaeros_Minimap_23.5.0_Forge_1.20.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/caelus-forge-3.1.0%2B1.20.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/citadel-2.4.2-1.20.1.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/colytra-forge-6.2.0%2B1.20.1.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/dungeons-and-taverns-2.0.2%2Bforge.jar"   
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/explorations-forge-1.20.1-1.5.1.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/jei-1.20.1-forge-15.2.0.23.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/majrusz-library-1.20-4.3.2.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/repurposed_structures-7.0.0%2B1.20-forge.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/tlc_forge-1.0.3-R-1.20.X.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/u_team_core-forge-1.20.1-5.1.3.267.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/useful_backpacks-forge-1.20.1-2.0.1.121.jar"
+            "https://github.com/DereckAn/minecraft/blob/main/Mods/vanillaplustools-1.20-1.0.jar"
+        )
+
+        # Carpeta de destino para los archivos descargados
+        destination="$HOME/Library/Application Support/minecraft/mods"
+        # & tambien puedes ser esta direccion por si acaso /Applications/Minecraft/Library/Application Support/minecraft/mods
+
+         # Verifica si la carpeta de destino existe, si no, créala
+        if [ ! -d "$destination" ]; then
+            mkdir -p "$destination"
+        fi
+
+        # Iterar sobre los enlaces y descargar cada archivo
+        for link in "${links[@]}"
+        do
+            # Extraer el nombre del archivo del enlace
+            filename=$(basename "$link")
+
+            # Descargar el archivo utilizando curl
+            curl -LJO "$link" -o "$destination/$filename"
+        done
+
+    else 
+        echo "Error installing Minecraft mods"
+    fi
 
 elif [ $os = "2" ]; then
+    echo "You have selected Linux"
 
-    # code for Ubuntu
-    echo "Checking for git..."
-    if ! [ -x "$(command -v git)" ]; then
-        echo "Error: git is not installed. Please install git and run the script again."
-        echo "Installing git..."
-        sudo apt-get install git
-        exit 1
-    fi
-    echo "Installing ZSH"
-    sudo apt-get install zsh
-    echo "Setting ZSH as default shell"
-    chsh -s $(which zsh)
-    if [ -d "$HOME/.oh-my-zsh" ]; then
-        echo "Oh My Zsh already installed"
+    if ! which git >/dev/null; then
+        echo "Git not found. Installing..."
+        sudo apt-get update
+        sudo apt-get install git -y
     else
-        echo "Installing Oh My Zsh"
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" &
-        wait
-        if [ $? -eq 0 ]; then
-            echo "Successfully installed Oh My Zsh"
-        else
-            echo "Error installing Oh My Zsh"
-        fi
+        echo "Git found."
     fi
-    if [ $? -eq 0 ]; then
-        echo "Installing Powerlevel10k"
-        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-        sed -i -e 's#robbyrussell#powerlevel10k/powerlevel10k#g' ~/.zshrc
-        echo "Installing plugins"
-        git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-        git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-        sed -i -e 's/plugins=(git)/plugins=(git jump zsh-autosuggestions sublime zsh-history-substring-search jsontools zsh-syntax-highlighting zsh-interactive-cd)/g' ~/.zshrc
-        echo "Please restart your terminal for changes to take effect"
+
+    if ! java -version 2>&1 | grep "21.0.1" > /dev/null; then
+        echo "Java not found. Installing..."
+        sudo apt-get update 
+        sudo apt-get install openjdk-17-jdk -y
+    else
+        echo "Java found."
     fi
+
+    if [ ! -d "$HOME/.minecraft/versions/forge" ]; then
+        echo "Forge not found. Installing..."
+        curl -LJO https://files.minecraftforge.net/maven/net/minecraftforge/forge/1.20.1-47.1.0/forge-1.20.1-47.1.0-installer.jar
+        java -jar forge-1.20.1-47.1.0-installer.jar --installClient
+    else
+        echo "Forge found."
+    fi
+
+  # Lista de enlaces a mods
+    links=(
+        "https://github.com/mod1.jar"
+        "https://github.com/mod2.jar"
+    )
+
+  # Carpeta de destino 
+    destination="$HOME/.minecraft/mods"
+
+    if [ ! -d "$destination" ]; then
+        mkdir -p "$destination"
+    fi
+
+  # Descarga mods
+    for link in "${links[@]}"; do
+        filename=$(basename "$link")
+        curl -LJO "$link" -o "$destination/$filename" 
+    done
 
 elif [ $os = "3" ]; then
 
-    # code for Fedora
-    echo "Checking for git..."
-    if ! [ -x "$(command -v git)" ]; then
-        echo "Error: git is not installed. Please install git and run the script again."
-        echo "Installing git..."
-        sudo dnf install git
-        exit 1
-    fi
-    echo "Installing ZSH"
-    sudo dnf install zsh
-    echo "Setting ZSH as default shell"
-    chsh -s $(which zsh)
-    if [ -d "$HOME/.oh-my-zsh" ]; then
-        echo "Oh My Zsh already installed"
-    else
-        echo "Installing Oh My Zsh"
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" &
-        wait
-        if [ $? -eq 0 ]; then
-            echo "Successfully installed Oh My Zsh"
-        else
-            echo "Error installing Oh My Zsh"
-        fi
-    fi
-    if [ $? -eq 0 ]; then
-        echo "Installing Powerlevel10k"
-        git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-        sed -i -e 's#robbyrussell#powerlevel10k/powerlevel10k#g' ~/.zshrc
-        echo "Installing plugins"
-        git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-        git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-        sed -i -e 's/plugins=(git)/plugins=(git jump zsh-autosuggestions sublime zsh-history-substring-search jsontools zsh-syntax-highlighting zsh-interactive-cd)/g' ~/.zshrc
-        echo "Please restart your terminal for changes to take effect"
-    fi
+    echo "You have selected Windows"
 
-else
-    echo "Error installing Oh My Zsh"
+    if not exist "C:\Program Files\git" (
+        echo "Git not found. Installing..."
+        choco install git -y
+    ) else (
+        echo "Git found."
+    )
+
+    if not java -version 2>&1 | findstr "21.0.1" >nul then
+        echo "Java not found. Installing..."
+        choco install openjdk17 -y
+    ) else (
+        echo "Java found."  
+    )
+
+    if not exist "%APPDATA%\.minecraft\versions\forge" (
+        echo "Forge not found. Installing..." 
+        curl -LO https://files.minecraftforge.net/maven/net/minecraftforge/forge/1.20.1-47.1.0/forge-1.20.1-47.1.0-installer.jar
+        java -jar forge-1.20.1-47.1.0-installer.jar --installClient
+    ) else (
+        echo "Forge found."
+    )
+
+    rem Lista de enlaces a mods
+    set links=(
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/BiomesOPlenty-1.20.1-18.0.0.592.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/Dungeon%2BCrawl-1.20.1-2.3.14.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/DungeonsArise-1.20.1-2.1.56.1-beta.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/HopoBetterMineshaft-%5B1.20-1.20.1%5D-1.1.8.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/MutantMonsters-v8.0.2-1.20.1-Forge.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/Philips-Ruins1.20.1-1.4.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/PuzzlesLib-v8.0.7-1.20.1-Forge.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/Rex's-AdditionalStructures-1.20.x-(v.4.1.2).jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/TerraBlender-forge-1.20.1-3.0.0.169.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/TheHammerMod-1.20.1-beta3.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/Xaeros_Minimap_23.5.0_Forge_1.20.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/caelus-forge-3.1.0%2B1.20.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/citadel-2.4.2-1.20.1.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/colytra-forge-6.2.0%2B1.20.1.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/dungeons-and-taverns-2.0.2%2Bforge.jar"   
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/explorations-forge-1.20.1-1.5.1.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/jei-1.20.1-forge-15.2.0.23.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/majrusz-library-1.20-4.3.2.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/repurposed_structures-7.0.0%2B1.20-forge.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/tlc_forge-1.0.3-R-1.20.X.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/u_team_core-forge-1.20.1-5.1.3.267.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/useful_backpacks-forge-1.20.1-2.0.1.121.jar"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/vanillaplustools-1.20-1.0.jar"
+    )
+
+    rem Carpeta de destino
+    set destination = "%APPDATA%\.minecraft\mods"
+
+    if not exist "%destination%" (
+        mkdir "%destination%"
+    )
+
+    rem Descarga mods
+    for %%link in %links% do (
+        set filename=%%~nxlink
+        curl -LO "%%link" -o "%destination%\!filename!"
+    )
+
 fi
