@@ -4,7 +4,7 @@ echo "What is your OS? (Enter 1 for macOS, 2 for Linux, or 3 for Windows)"
 read os
 
 while [ "$os" != "1" ] && [ "$os" != "2" ] && [ "$os" != "3" ]; do
-    echo "Invalid input. Please enter 1 for macOS, 2 for Linux, or 3 for Windows."
+    echo "Please enter 1 for macOS, 2 for Linux, or 3 for Windows."
     read os
 done
 
@@ -108,6 +108,10 @@ if [ $os = "1" ]; then
         echo "Error installing Minecraft mods"
     fi
 
+
+
+
+
 elif [ $os = "2" ]; then
     echo "You have selected Linux"
 
@@ -154,6 +158,11 @@ elif [ $os = "2" ]; then
         curl -LJO "$link" -o "$destination/$filename" 
     done
 
+
+
+
+
+
 elif [ $os = "3" ]; then
 
     echo "You have selected Windows"
@@ -180,7 +189,8 @@ elif [ $os = "3" ]; then
         echo "Forge found."
     )
 
-    rem Lista de enlaces a mods
+    # rem Lista de enlaces a mods
+    # maybe there is a problem with the last link 
     set links=(
         "https://github.com/DereckAn/minecraft/blob/main/Mods/BiomesOPlenty-1.20.1-18.0.0.592.jar"
         "https://github.com/DereckAn/minecraft/blob/main/Mods/Dungeon%2BCrawl-1.20.1-2.3.14.jar"
@@ -205,16 +215,18 @@ elif [ $os = "3" ]; then
         "https://github.com/DereckAn/minecraft/blob/main/Mods/u_team_core-forge-1.20.1-5.1.3.267.jar"
         "https://github.com/DereckAn/minecraft/blob/main/Mods/useful_backpacks-forge-1.20.1-2.0.1.121.jar"
         "https://github.com/DereckAn/minecraft/blob/main/Mods/vanillaplustools-1.20-1.0.jar"
+        "https://www.curseforge.com/minecraft/mc-mods/l_ender-s-cataclysm/download/4646631"
     )
 
-    rem Carpeta de destino
-    set destination = "%APPDATA%\.minecraft\mods"
+    # rem Destination folder
+    # to install mods in minecraft you need to go to the mods folder in the .minecraft this is the whlo path "C:\Users\Pito de Abuelo\AppData\Roaming\.minecraft\mods" in my case
+    set destination = "%APPDATA%\.minecraft\mods"  
 
     if not exist "%destination%" (
         mkdir "%destination%"
     )
 
-    rem Descarga mods
+    # rem Descarga mods
     for %%link in %links% do (
         set filename=%%~nxlink
         curl -LO "%%link" -o "%destination%\!filename!"
