@@ -215,7 +215,7 @@ elif [ $os = "3" ]; then
         "https://github.com/DereckAn/minecraft/blob/main/Mods/u_team_core-forge-1.20.1-5.1.3.267.jar"
         "https://github.com/DereckAn/minecraft/blob/main/Mods/useful_backpacks-forge-1.20.1-2.0.1.121.jar"
         "https://github.com/DereckAn/minecraft/blob/main/Mods/vanillaplustools-1.20-1.0.jar"
-        "https://www.curseforge.com/minecraft/mc-mods/l_ender-s-cataclysm/download/4646631"
+        "https://github.com/DereckAn/minecraft/blob/main/Mods/L_Enders_Cataclysm-1.17-1.20.1(Latest%2BForge%2BOnly).jar"
     )
 
     # rem Destination folder
