@@ -10,11 +10,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/DereckAn/minecraft/main/Pl
 
 ## Windows
 ```
-iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/sapoepsilon/scripts/main/installOhMyZSH.ps1')) 
+iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/DereckAn/minecraft/main/PlayWindows.bat')) 
 ```
 
-```
-function test() {
-  console.log("This code will have a copy button to the right of it");
-}
-```
