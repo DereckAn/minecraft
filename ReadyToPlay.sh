@@ -176,7 +176,7 @@ elif [ $os = "3" ]; then
 
     if not java -version 2>&1 | findstr "21.0.1" >nul then
         echo "Java not found. Installing..."
-        choco install openjdk17 -y
+        curl -LO https://download.oracle.com/java/21/latest/jdk-21_windows-x64_bin.exe
     ) else (
         echo "Java found."  
     )
