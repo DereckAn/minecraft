@@ -2,9 +2,12 @@
 
 if ! java -version 2>&1 | grep -q "21.0.1"; then
     echo "Java not found. Installing..."
-    installerPath="$HOME/Downloads/jdk-21_windows-x64_bin.exe"
-    wget -O "$installerPath" "https://download.oracle.com/java/21/latest/jdk-21_windows-x64_bin.exe"
-    wine "$installerPath"
+    sudo pacman -S jre-openjdk -y
+    sudo pacman -S jdk-openjdk -y
+
+    # installerPath="$HOME/Downloads/jdk-21_windows-x64_bin.exe"
+    # wget -O "$installerPath" "https://download.oracle.com/java/21/latest/jdk-21_windows-x64_bin.exe"
+    # wine "$installerPath"
 else
     echo "Java found."
 fi
