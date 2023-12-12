@@ -35,7 +35,6 @@ $links = @(
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/OnlyHammers-1.20.1-0.5-Forge.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/Philips-Ruins1.20.1-2.7.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/PuzzlesLib-v8.1.11-1.20.1-Forge.jar"
-    "https://github.com/DereckAn/minecraft/blob/main/difficul_af/Rex's-AdditionalStructures-1.20.x-(v.4.1.2).jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/TerraBlender-forge-1.20.1-3.0.0.169.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/Terralith_1.20.1_v2.4.5.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/TheHammerMod-1.20.1-beta3.jar"
@@ -54,7 +53,6 @@ $links = @(
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/creeperoverhaul-3.0.1-forge.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/cupboard-1.20.1-2.1.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/dungeons-and-taverns-v2.1.4%20%5BForge%5D.jar"
-    "https://github.com/DereckAn/minecraft/blob/main/difficul_af/dungeons_1.16.1_mc1.20.1.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/explorations-forge-1.20.1-1.5.2.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/explorify-v1.3.0-mc1.20u1.20.1.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/fusion-1.1.0b-forge-mc1.20.1.jar"
@@ -62,7 +60,6 @@ $links = @(
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/gravestone-1.20.1-1.0.10.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/improvedmobs-1.20.1-1.11.6-forge.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/imst-2.1.0.jar"
-    "https://github.com/DereckAn/minecraft/blob/main/difficul_af/invhud.forge.1.20.1-3.4.18.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/jei-1.20.1-forge-15.2.0.27.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/majrusz-library-forge-1.20.1-7.0.1.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/majruszs-difficulty-forge-1.20.1-1.9.2.jar"
@@ -76,6 +73,10 @@ $links = @(
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/useful_backpacks-forge-1.20.1-2.0.1.122.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/waystones-forge-1.20-14.0.2.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/wthit-forge-8.4.3.jar"
+    "https://github.com/DereckAn/minecraft/blob/main/difficul_af/ctov-3.3.6.jar"
+    "https://github.com/DereckAn/minecraft/blob/main/difficul_af/rare-ice-0.6.0.jar"
+
+
 )
 
 $destination = "$env:APPDATA\.minecraft\mods"
