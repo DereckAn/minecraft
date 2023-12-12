@@ -15,7 +15,7 @@ fi
 if [ ! -d "$HOME/.minecraft/versions/1.20.1-forge-47.1.0" ]; then
     echo "Forge not found. Installing..."
     installerPath2="$HOME/Downloads/forge-1.20.1-47.1.0-installer.jar"
-    wget -O "$installerPath2" "https://adfoc.us/serve/sitelinks/?id=271228&url=https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.1-47.2.0/forge-1.20.1-47.2.0-installer.jar"
+    wget -O "$installerPath2" "https://github.com/DereckAn/minecraft/blob/main/forge_version/forge-1.20.1-47.2.0-installer.jar"
     java -jar "$installerPath2" --installClient
     java -jar "$installerPath2"
 else
