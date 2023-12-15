@@ -12,7 +12,7 @@ if (-not (Test-Path "$env:APPDATA\.minecraft\versions\1.20.1-forge-47.2.0")) {
     Write-Output "Forge not found. Installing..."
     $installerPath2 = "$env:USERPROFILE\Downloads\forge-1.20.1-47.2.0-installer.jar"
     Invoke-WebRequest -Uri "https://github.com/DereckAn/minecraft/blob/main/forge_version/forge-1.20.1-47.2.0-installer.jar" -OutFile $installerPath2
-    java -jar forge-1.20.1-47.1.0-installer.jar --installClient
+    java -jar forge-1.20.1-47.2.0-installer.jar --installClient
     Start-Process -FilePath $installerPath2
 } else {
     Write-Output "Forge found."
@@ -75,17 +75,29 @@ $links = @(
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/wthit-forge-8.4.3.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/ctov-3.3.6.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/rare-ice-0.6.0.jar"
+    "https://github.com/DereckAn/minecraft/blob/main/difficul_af/TravelersBackpack-1.20.1-9.1.11.jar"
 
 
 )
 
+
 $destination = "$env:APPDATA\.minecraft\mods"
 
-if (-not (Test-Path $destination)) {
+# Verifica si la carpeta "mods" existe
+if (Test-Path $destination) {
+    # Obtiene todos los archivos en la carpeta "mods"
+    $files = Get-ChildItem -Path $destination
+
+    # Si hay archivos en la carpeta, los elimina
+    if ($files) {
+        Remove-Item -Path "$destination\*" -Recurse -Force
+    }
+} else {
+    # Si la carpeta "mods" no existe, la crea
     New-Item -ItemType Directory -Path $destination
 }
 
-# Descarga mods
+# Descarga e instala los nuevos archivos
 foreach ($link in $links) {
     $filename = Split-Path -Leaf $link
     $filepath = Join-Path -Path $destination -ChildPath $filename
@@ -93,3 +105,5 @@ foreach ($link in $links) {
         Invoke-WebRequest -Uri $link -OutFile $filepath
     }
 }
+
+ Write-Output "Done"

@@ -78,7 +78,8 @@ links=(
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/waystones-forge-1.20-14.0.2.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/wthit-forge-8.4.3.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/ctov-3.3.6.jar"
-    "https://github.com/DereckAn/minecraft/blob/main/difficul_af/rare-ice-0.6.0.jar"
+    "https://github.com/DereckAn/minecraft/blob/main/difficul_af/rare-ice-0.6.0.jar",
+    "https://github.com/DereckAn/minecraft/blob/main/difficul_af/TravelersBackpack-1.20.1-9.1.11.jar"
 
 )
 
