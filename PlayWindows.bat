@@ -1,17 +1,45 @@
 
-if (-not (java -version 2>&1 | Select-String "21.0.1")) {
-    Write-Output "Java not found. Installing..."
-    $installerPath = "$env:USERPROFILE\Downloads\jdk-21_windows-x64_bin.exe"
-    Invoke-WebRequest -Uri "https://download.oracle.com/java/21/latest/jdk-21_windows-x64_bin.exe" -OutFile $installerPath
-    Start-Process -FilePath $installerPath
+# Verificar si Java está instalado
+$java = Get-Command java -ErrorAction SilentlyContinue
+
+if ($java) {
+    Write-Host "Java ya está instalado."
 } else {
-    Write-Output "Java found."
+    # Preguntar al usuario si desea instalar Java 17 y Java 21
+    $userInput = Read-Host "¿Deseas instalar Java 17 y Java 21? (S/N)"
+
+    while ($userInput -ne "S" -and $userInput -ne "N") {
+        Write-Host "Error. Responda con un S o N"
+        $userInput = Read-Host "¿Deseas instalar Java 17 y Java 21? (S/N)"
+    }
+
+   if ($userInput -eq "S") {
+        Write-Host "Descargando e instalando Java 17 y la última versión de Java..."
+
+        # Descargar Java 17
+        Invoke-WebRequest -Uri "https://download.java.net/java/GA/jdk17/0d483333a00540d886896bac774ff48b/35/GPL/openjdk-17_windows-x64_bin.zip" -OutFile "$HOME\Downloads\java17.zip"
+
+        # Descargar Java 21
+        Invoke-WebRequest -Uri "https://download.oracle.com/java/21/latest/jdk-21_windows-x64_bin.msi" -OutFile "$HOME\Downloads\javalatest.exe"
+
+        # Instalar Java 17
+        Expand-Archive -Path "$HOME\Downloads\java17.zip" -DestinationPath "$HOME\Downloads"
+        Write-Host "Java 17 instalado."
+
+        # Instalar Java 21
+        Start-Process -FilePath "$HOME\Downloads\javalatest.exe" -Wait
+        Write-Host "La última versión de Java instalada."
+    } else {
+        Write-Host "No se instalará Java."
+    }
 }
+
+
 
 if (-not (Test-Path "$env:APPDATA\.minecraft\versions\1.20.1-forge-47.2.0")) {
     Write-Output "Forge not found. Installing..."
     $installerPath2 = "$env:USERPROFILE\Downloads\forge-1.20.1-47.2.0-installer.jar"
-    Invoke-WebRequest -Uri "https://github.com/DereckAn/minecraft/blob/main/forge_version/forge-1.20.1-47.2.0-installer.jar" -OutFile $installerPath2
+    Invoke-WebRequest -Uri "https://maven.minecraftforge.net/net/minecraftforge/forge/1.20.1-47.2.0/forge-1.20.1-47.2.0-installer.jar" -OutFile $installerPath2
     java -jar forge-1.20.1-47.2.0-installer.jar --installClient
     Start-Process -FilePath $installerPath2
 } else {
