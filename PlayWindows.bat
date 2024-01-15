@@ -105,7 +105,6 @@ $links = @(
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/rare-ice-0.6.0.jar"
     "https://github.com/DereckAn/minecraft/blob/main/difficul_af/TravelersBackpack-1.20.1-9.1.11.jar"
 
-
 )
 
 
