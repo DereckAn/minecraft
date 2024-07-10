@@ -6,7 +6,7 @@ if ! which brew >/dev/null; then
         echo "Homebrew found."
 fi
 
-# Verificar si SVN está instalado
+# Verificar si Git está instalado
 if ! command -v git &> /dev/null; then
     echo "Git no está instalado. Instalándolo..."
     brew install git
@@ -27,7 +27,7 @@ else
     fi
     # Instalar Java usando Homebrew
     brew install openjdk
-    echo 'export PATH="/usr/local/opt/openjdk/bin:$PATH"' >> ~/.zshrc
+    echo 'export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"' >> ~/.zshrc
     source ~/.zshrc
     echo "Java ha sido instalado."
 fi
@@ -35,23 +35,68 @@ fi
 # Cambiar al directorio de descargas
 cd ~/Downloads
 
+# Verificar si existe la carpeta "mods" y eliminarla
+if [ -d "mods" ]; then
+    rm -rf mods
+fi
+
+# Crear una carpeta temporal
+mkdir temp
+cd temp
+
+# Descargando unicamente la carpeta mods del repositorio 
 git init 
 git remote add origin https://github.com/DereckAn/minecraft.git
 git config core.sparseCheckout true
-git sparse-checkout set mods
+git sparse-checkout  set mods
 git pull origin main 
 
+# Mover la carpeta "mods" a Downloads
+mv mods ../
 
+# Regresar a la carpeta Downloads y eliminar la carpeta temporal
+cd ..
+rm -rf temp
 
+# Definir la ruta y versión de Forge
+FORGE_VERSION="1.20.1-47.3.0"
+FORGE_INSTALLER="forge-${FORGE_VERSION}-installer.jar"
 
-
-
-set forgePath to (path to home folder as text) & "Downloads:forge-1.20.1-47.2.0-installer.jar"
-if not (exists folder (path to home folder as text) & ".minecraft:versions:1.20.1-forge-47.2.0") then
-    display dialog "Forge not found. Installing..." buttons {"OK"} default button 1
-    do shell script "curl -o " & quoted form of POSIX path of forgePath & "https://github.com/DereckAn/minecraft/blob/main/forge_version/forge-1.20.1-47.2.0-installer.jar"
-    do shell script "java -jar " & quoted form of POSIX path of forgePath & " --installClient"
-    do shell script "java -jar " & quoted form of POSIX path of forgePath
+# Determinar el sistema operativo y establecer la ruta de Minecraft Forge
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS
+    MINECRAFT_FORGE_DIR="$HOME/Library/Application Support/minecraft/versions/${FORGE_VERSION}"
+    # MINECRAFT_DIR="$HOME/Library/Application Support/minecraft"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # Linux
+    MINECRAFT_FORGE_DIR="$HOME/.minecraft/versions/${FORGE_VERSION}"
+    # MINECRAFT_DIR="$HOME/.minecraft"
 else
-    display dialog "Forge found." buttons {"OK"} default button 1
-end if
+    echo "Sistema operativo no soportado."
+    exit 1
+fi
+
+# Verificar si la versión específica de Forge ya está instalada
+if [ -d "${MINECRAFT_FORGE_DIR}" ]; then
+    echo "Minecraft Forge ${FORGE_VERSION} ya está instalado."
+else
+    echo "Minecraft Forge ${FORGE_VERSION} no está instalado. Procediendo con la instalación..."
+
+    cd
+    cd Downloads
+
+    mkdir -p minecraftForge
+    cd minecraftForge
+
+    # Descargar el archivo forge installer si no existe
+    if [ ! -f "${FORGE_INSTALLER}" ]; then
+        echo "Descargando Minecraft Forge ${FORGE_VERSION}..."
+        curl -O "https://maven.minecraftforge.net/net/minecraftforge/forge/${FORGE_VERSION}/${FORGE_INSTALLER}"
+    else
+        echo "El instalador de Minecraft Forge ${FORGE_VERSION} ya está descargado."
+    fi
+
+    # Ejecutar el instalador de Forge como cliente
+    echo "Instalando Minecraft Forge ${FORGE_VERSION}..."
+    java -jar "${FORGE_INSTALLER}" --installClient
+fi

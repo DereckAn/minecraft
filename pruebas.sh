@@ -27,7 +27,7 @@ else
     fi
     # Instalar Java usando Homebrew
     brew install openjdk
-    echo 'export PATH="/usr/local/opt/openjdk/bin:$PATH"' >> ~/.zshrc
+    echo 'export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"' >> ~/.zshrc
     source ~/.zshrc
     echo "Java ha sido instalado."
 fi
@@ -66,11 +66,11 @@ FORGE_INSTALLER="forge-${FORGE_VERSION}-installer.jar"
 if [[ "$OSTYPE" == "darwin"* ]]; then
     # macOS
     MINECRAFT_FORGE_DIR="$HOME/Library/Application Support/minecraft/versions/${FORGE_VERSION}"
-    MINECRAFT_DIR="$HOME/Library/Application Support/minecraft"
+    # MINECRAFT_DIR="$HOME/Library/Application Support/minecraft"
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     # Linux
     MINECRAFT_FORGE_DIR="$HOME/.minecraft/versions/${FORGE_VERSION}"
-    MINECRAFT_DIR="$HOME/.minecraft"
+    # MINECRAFT_DIR="$HOME/.minecraft"
 else
     echo "Sistema operativo no soportado."
     exit 1
@@ -82,12 +82,11 @@ if [ -d "${MINECRAFT_FORGE_DIR}" ]; then
 else
     echo "Minecraft Forge ${FORGE_VERSION} no está instalado. Procediendo con la instalación..."
 
-    # Cambiar al directorio de Minecraft
-    cd "${MINECRAFT_DIR}"
+    cd
+    cd Downloads
 
-    # Crear una carpeta para Minecraft Forge si no existe
-    mkdir -p "versions/${FORGE_VERSION}"
-    cd "versions/${FORGE_VERSION}"
+    mkdir -p minecraftForge
+    cd minecraftForge
 
     # Descargar el archivo forge installer si no existe
     if [ ! -f "${FORGE_INSTALLER}" ]; then
