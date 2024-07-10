@@ -6,18 +6,13 @@ To install Java, git, Minecraft Forge, and some mods please run this command
 > [!IMPORTANT]
 > Just copy and paste the line of code you need in your terminal
 
-## Arch Linux
+## MacOs and Linux
 ```
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/DereckAn/minecraft/main/PlayMac_Linux.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/DereckAn/minecraft/main/install_mods_in_mac&linux.sh)"
 ```
 
 ## Windows (PowerShell)
 > CMD Does NOT work 
 ```
 iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/DereckAn/minecraft/main/PlayWindows.bat'))
-```
-
-## MacOs
-```
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/DereckAn/minecraft/main/MacOs.sh)"
 ```
