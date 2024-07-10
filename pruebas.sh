@@ -14,22 +14,45 @@ else
     echo "Git found."
 fi
 
-
-# Verificar si Java está instalado
-if type -p java > /dev/null; then
-    echo "Java found."
-else
-    echo "Java no está instalado. Instalando la última versión de Java..."
-    # Verificar si Homebrew está instalado
-    if ! command -v brew &> /dev/null; then
-        echo "Homebrew no está instalado. Instalándolo..."
-        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS
+    # Verificar si Java está instalado
+    if type -p java > /dev/null; then
+        echo "Java found."
+    else
+        echo "Java no está instalado. Instalando la última versión de Java..."
+        # Descargar el archivo DMG de Java
+        curl -L -O https://download.oracle.com/java/22/latest/jdk-22_macos-aarch64_bin.dmg
+        # Montar el archivo DMG
+        hdiutil attach jdk-22_macos-aarch64_bin.dmg
+        # Instalar Java
+        sudo installer -pkg /Volumes/JDK\ 22/*.pkg -target /
+        # Desmontar el archivo DMG
+        hdiutil detach /Volumes/JDK\ 22
+        # Eliminar el archivo DMG
+        rm jdk-22_macos-aarch64_bin.dmg
+        # Establecer JAVA_HOME en ~/.zshrc
+        echo 'export JAVA_HOME=$(/usr/libexec/java_home -v 22)' >> ~/.zshrc
+        source ~/.zshrc
+        echo "Java ha sido instalado."
     fi
-    # Instalar Java usando Homebrew
-    brew install openjdk
-    echo 'export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"' >> ~/.zshrc
-    source ~/.zshrc
-    echo "Java ha sido instalado."
+
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # Linux
+    # Verificar si Java está instalado
+    if type -p java > /dev/null; then
+        echo "Java found."
+    else
+        echo "Java no está instalado. Instalando la última versión de Java..."
+        # Actualizar la lista de paquetes
+        sudo apt update
+        # Instalar Java
+        sudo apt install openjdk-22-jdk
+        echo "Java ha sido instalado."
+    fi
+else
+    echo "Sistema operativo no soportado."
+    exit 1
 fi
 
 # Cambiar al directorio de descargas
@@ -58,6 +81,13 @@ mv mods ../
 cd ..
 rm -rf temp
 
+# Verificar si existe la carpeta "$HOME/Library/Application Support/minecraft/mods"
+# Si no existe, crearla
+mkdir -p "$HOME/Library/Application Support/minecraft/mods"
+
+# Mover el contenido de la carpeta "~/Downloads/mods" a "$HOME/Library/Application Support/minecraft/mods"
+mv mods/* "$HOME/Library/Application Support/minecraft/mods/"
+
 # Definir la ruta y versión de Forge
 FORGE_VERSION="1.20.1-47.3.0"
 FORGE_INSTALLER="forge-${FORGE_VERSION}-installer.jar"
@@ -83,7 +113,7 @@ else
     echo "Minecraft Forge ${FORGE_VERSION} no está instalado. Procediendo con la instalación..."
 
     cd
-    cd Downloads
+    cd ~/Downloads
 
     mkdir -p minecraftForge
     cd minecraftForge
@@ -98,5 +128,5 @@ else
 
     # Ejecutar el instalador de Forge como cliente
     echo "Instalando Minecraft Forge ${FORGE_VERSION}..."
-    java -jar "${FORGE_INSTALLER}" --installClient
+    java -jar $FORGE_INSTALLER
 fi
