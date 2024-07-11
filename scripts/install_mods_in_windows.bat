@@ -44,8 +44,6 @@ VerificarEInstalar -nombre "git" -id "Git.Git"
 # Verificar si Java está instalado
 VerificarEInstalar -nombre "java" -id "Microsoft.OpenJDK.21"
 
-# ... el resto de tu código ...
-
 function DescargarYConfigurarMods {
     $modsDir = "$env:APPDATA\.minecraft\mods"
 
