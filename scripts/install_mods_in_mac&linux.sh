@@ -56,8 +56,8 @@ descargar_y_configurar_mods() {
     fi
 
     # Eliminar carpeta mods si existe y crear carpeta temporal
-    rm -rf ~/Downloads/mods
-    mkdir -p ~/Downloads/temp && cd $_
+    rm -rf $HOME/Downloads/mods
+    mkdir -p $HOME/Downloads/temp && cd $_
 
     # Descargar mods
     git init

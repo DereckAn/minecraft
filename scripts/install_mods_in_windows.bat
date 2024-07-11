@@ -1,44 +1,25 @@
-
+# Función para verificar e instalar un programa usando winget
+function VerificarEInstalar {
+    param (
+        [Parameter(Mandatory=$true)] [string] $nombre,
+        [Parameter(Mandatory=$true)] [string] $id
+    )
+    if (Get-Command $nombre -ErrorAction SilentlyContinue) {
+        Write-Output "$nombre está instalado."
+    } else {
+        Write-Output "Instalando $nombre ..."
+        winget install --id=$id -e
+    }
+}
 
 # Verificar si winget está instalado
-if (Get-Command winget -ErrorAction SilentlyContinue) {
-    Write-Output "Winget está instalado."
-} else {
-    Write-Output "Winget no está instalado. Procediendo con la instalación."
-
-    # Descargar el paquete de instalación de winget
-    try {
-        Invoke-WebRequest -Uri "https://github.com/microsoft/winget-cli/releases/download/v1.0.11692/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.appxbundle" -OutFile "winget.appxbundle"
-        Write-Output "Descarga completada."
-    } catch {
-        Write-Error "Error al descargar el paquete de instalación de winget."
-        exit
-    }
-
-    # Instalar winget
-    try {
-        Add-AppxPackage .\winget.appxbundle
-        Write-Output "Instalación completada."
-    } catch {
-        Write-Error "Error al instalar winget."
-    }
-}
+VerificarEInstalar -nombre "winget" -id "Microsoft.Winget"
 
 # Verificar si Git está instalado
-if (Get-Command git -ErrorAction SilentlyContinue) {
-    Write-Output "Git está instalado."
-} else {
-    Write-Output "Instalando Git ..."
-    winget install --id=Git.Git -e
-}
+VerificarEInstalar -nombre "git" -id "Git.Git"
 
 # Verificar si Java está instalado
-if (Get-Command java -ErrorAction SilentlyContinue) {
-    Write-Output "Java está instalado."
-} else {
-    Write-Output "Instalando Java ..."
-    winget install Microsoft.OpenJDK.21
-}
+VerificarEInstalar -nombre "java" -id "Microsoft.OpenJDK.21"
 
 function DescargarYConfigurarMods {
     $modsDir = $null
@@ -70,7 +51,6 @@ function DescargarYConfigurarMods {
     Remove-Item -Path $tempDir -Recurse -Force
 }
 
-
 if (-not (Test-Path "$env:APPDATA\.minecraft\versions\1.20.1-forge-47.3.0")) {
     Write-Output "Forge not found. Installing..."
     $installerPath2 = "$env:USERPROFILE\Downloads\forge-1.20.1-47.3.0-installer.jar"
@@ -80,6 +60,3 @@ if (-not (Test-Path "$env:APPDATA\.minecraft\versions\1.20.1-forge-47.3.0")) {
 } else {
     Write-Output "Forge found."
 }
-
-
-DescargarYConfigurarMods

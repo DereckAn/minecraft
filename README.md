@@ -14,5 +14,5 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/DereckAn/minecraft/main/in
 ## Windows (PowerShell)
 > CMD Does NOT work 
 ```
-iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/DereckAn/minecraft/main/PlayWindows.bat'))
+iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/DereckAn/minecraft/main/install_mods_in_windows.bat'))
 ```
