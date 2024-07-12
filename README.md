@@ -8,7 +8,7 @@ To install Java, git, Minecraft Forge, and some mods please run this command
 
 ## MacOs and Linux
 ```
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/DereckAn/minecraft/main/scripts/install_mods_in_mac&linux.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/DereckAn/minecraft/main/scripts/install_mods_mac_linux.sh)"
 ```
 
 ## Windows (PowerShell)
