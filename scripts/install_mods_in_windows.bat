@@ -21,28 +21,21 @@ function InstalarWinget {
     }
 }
 
-# Función para verificar e instalar un programa usando winget
-function VerificarEInstalar {
-    param (
-        [Parameter(Mandatory=$true)] [string] $nombre,
-        [Parameter(Mandatory=$true)] [string] $id
-    )
-    if (Get-Command $nombre -ErrorAction SilentlyContinue) {
-        Write-Output "$nombre está instalado."
-    } else {
-        Write-Output "Instalando $nombre ..."
-        winget install --id=$id -e
-    }
+# Verifitcar si Git está instalado
+if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
+    Write-Output "Git no encontrado. Instalando..."
+    winget install --id Git.Git -e --source winget
+} else {
+    Write-Output "Git encontrado."
 }
 
-# Instalar Winget si no está presente
-InstalarWinget
-
-# Verificar si Git está instalado
-VerificarEInstalar -nombre "git" -id "Git.Git"
-
-# Verificar si Java está instalado
-VerificarEInstalar -nombre "java" -id "Microsoft.OpenJDK.21"
+# Verifitcar si Java está instalado
+if (-not (Get-Command java -ErrorAction SilentlyContinue)) {
+    Write-Output "Java no encontrado. Instalando..."
+    winget install Microsoft.OpenJDK.21
+} else {
+    Write-Output "Java encontrado."
+}
 
 function DescargarYConfigurarMods {
     $modsDir = "$env:APPDATA\.minecraft\mods"
