@@ -6,7 +6,7 @@ ENV MINECRAFT_VERSION=1.21
 ENV FABRIC_LOADER_VERSION=0.16.5
 ENV LAUNCHER_VERSION=1.0.1
 ENV MINECRAFT_JAR=fabric-server-mc.${MINECRAFT_VERSION}-loader.${FABRIC_LOADER_VERSION}-launcher.${LAUNCHER_VERSION}.jar
-ENV MINECRAFT_RAM=50G
+ENV MINECRAFT_RAM=24G
 
 # Instalamos las herramientas necesarias
 RUN apt-get update && apt-get install -y \
