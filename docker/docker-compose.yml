@@ -9,7 +9,7 @@ services:
     volumes:
       - ./data:/minecraft
     environment:
-      - MINECRAFT_RAM=50G
+      - MINECRAFT_RAM=24G
     restart: unless-stopped
     tty: true
     stdin_open: true
