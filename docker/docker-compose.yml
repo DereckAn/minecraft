@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+  minecraft:
+    build: .
+    container_name: minecraft-fabric-server
+    ports:
+      - "25565:25565"
+    volumes:
+      - ./data:/minecraft
+    environment:
+      - MINECRAFT_RAM=50G
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+
+volumes:
+  minecraft_data:
+    driver: local

@@ -27,6 +27,7 @@ if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
     winget install --id Git.Git -e --source winget
 } else {
     Write-Output "Git encontrado."
+    git --version
 }
 
 # Verifitcar si Java está instalado
@@ -35,6 +36,7 @@ if (-not (Get-Command java -ErrorAction SilentlyContinue)) {
     winget install Microsoft.OpenJDK.21
 } else {
     Write-Output "Java encontrado."
+    java --version
 }
 
 function DescargarYConfigurarMods {
