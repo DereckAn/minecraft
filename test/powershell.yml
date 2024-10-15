@@ -1,0 +1,17 @@
+name: Test PowerShell Script
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Pester
+      shell: powershell
+      run: |
+        Install-Module -Name Pester -Force -SkipPublisherCheck
+    - name: Run Pester tests
+      shell: powershell
+      run: |
+        Invoke-Pester -Path .\ -CI

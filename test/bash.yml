@@ -1,0 +1,44 @@
+name: Test Minecraft Mod Installer
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'adopt'
+        java-version: '17'
+
+    - name: Make script executable
+      run: chmod +x ./install_minecraft_mods.sh
+
+    - name: Run script
+      run: |
+        ./install_minecraft_mods.sh
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
+    - name: Check if Fabric is installed
+      run: |
+        if [[ "$RUNNER_OS" == "Linux" ]]; then
+          test -d $HOME/.minecraft/versions/*-fabric-loader-* && echo "Fabric installed successfully" || exit 1
+        elif [[ "$RUNNER_OS" == "macOS" ]]; then
+          test -d "$HOME/Library/Application Support/minecraft/versions/"*-fabric-loader-* && echo "Fabric installed successfully" || exit 1
+        fi
+
+    - name: Check if mods are downloaded
+      run: |
+        if [[ "$RUNNER_OS" == "Linux" ]]; then
+          test -d $HOME/.minecraft/mods && [ "$(ls -A $HOME/.minecraft/mods)" ] && echo "Mods downloaded successfully" || exit 1
+        elif [[ "$RUNNER_OS" == "macOS" ]]; then
+          test -d "$HOME/Library/Application Support/minecraft/mods" && [ "$(ls -A "$HOME/Library/Application Support/minecraft/mods")" ] && echo "Mods downloaded successfully" || exit 1
+        fi
