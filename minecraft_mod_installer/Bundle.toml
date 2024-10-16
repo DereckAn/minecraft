@@ -1,0 +1,21 @@
+[package]
+name = "DerckAn Installer"
+version = "1.0.0"
+description = "Instalador de mods para Minecraft"
+license = "MIT"
+
+[bundle]
+name = "MinecraftModInstaller"
+identifier = "DereckAn.com"
+icon = ["32x32.png", "128x128.png", "128x128@2x.png"]
+version = "1.0.0"
+resources = ["resources", "assets"]
+copyright = "Copyright (c) Tu Nombre 2023. Todos los derechos reservados."
+category = "public.app-category.games"
+short_description = "Instala mods de Minecraft fácilmente"
+long_description = """
+Este programa instala automáticamente Git, Java, Fabric y los mods necesarios para jugar Minecraft con tus amigos.
+"""
+
+[package.metadata.bundle.windows]
+icon = ["32x32.ico", "128x128.ico"]

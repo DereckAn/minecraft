@@ -1,18 +1,33 @@
 # Minecraft
 
 
-To install Java, git, Minecraft Forge, and some mods please run this command
+To install Java, git, fabric, and some mods please run this command
 
 > [!IMPORTANT]
 > Just copy and paste the line of code you need in your terminal
 
-## MacOs and Linux
+<!-- ## MacOs and Linux -->
+<h2 style="color: green;">MacOs and Linux</h2>
+
 ```
 sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/DereckAn/minecraft/main/scripts/install_mods_in_mac%26linux.sh)"
 ```
 
-## Windows (PowerShell)
-> CMD Does NOT work 
+<!-- ## Windows (PowerShell) -->
+<h2 style="color: green;">Windows (PowerShell)</h2>
+
 ```
 iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/DereckAn/minecraft/main/scripts/install_mods_in_windows.bat'))
+```
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+> [!WARNING]
+> Just for the server. (Linux)
+```
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/DereckAn/minecraft/main/server/installmods.sh)"
 ```
