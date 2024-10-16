@@ -23,8 +23,8 @@ jobs:
 
       - name: Run Bash Script
         run: |
-          chmod +x install_farbic_mods_mac_linux.sh
-          ./install_farbic_mods_mac_linux.sh
+          chmod +x scripts/install_fabric_mods_mac_linux.sh
+          ./scripts/install_fabric_mods_mac_linux.sh
 
   test-windows:
     runs-on: windows-latest
@@ -40,5 +40,5 @@ jobs:
 
       - name: Run PowerShell Script
         run: |
-          .\install_fabric_mods_windows.ps1
+          .\scripts\install_fabric_mods_windows.ps1
         shell: pwsh
