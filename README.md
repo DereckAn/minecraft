@@ -10,14 +10,14 @@ To install Java, git, fabric, and some mods please run this command
 <h2 style="color: green;">MacOs and Linux</h2>
 
 ```
-sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/DereckAn/minecraft/main/scripts/install_mods_in_mac%26linux.sh)"
+sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/DereckAn/minecraft/main/scripts/install_farbic_mods_mac&linux.sh)"
 ```
 
 <!-- ## Windows (PowerShell) -->
 <h2 style="color: green;">Windows (PowerShell)</h2>
 
 ```
-iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/DereckAn/minecraft/main/scripts/install_mods_in_windows.bat'))
+iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/DereckAn/minecraft/main/scripts/install_fabric_mods_windows.bat'))
 ```
 <br/>
 <br/>

@@ -70,7 +70,7 @@ instalar_fabric() {
     local minecraft_dir
 
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        minecraft_dir="$HOME/Library/Application Support/minecraft/versions/"
+        minecraft_dir="$HOME/Library/Application Support/minecraft"
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
         minecraft_dir="$HOME/.minecraft"
     fi

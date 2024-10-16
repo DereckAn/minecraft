@@ -1,5 +1,3 @@
-# This is script is not tested yet
-
 # Función para instalar Winget
 function InstalarWinget {
     # Verificar si Winget está instalado
@@ -23,7 +21,7 @@ function InstalarWinget {
     }
 }
 
-# Verifitcar si Git está instalado
+# Verificar si Git está instalado
 if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
     Write-Output "Git no encontrado. Instalando..."
     winget install --id Git.Git -e --source winget
@@ -32,7 +30,7 @@ if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
     git --version
 }
 
-# Verifitcar si Java está instalado
+# Verificar si Java está instalado
 if (-not (Get-Command java -ErrorAction SilentlyContinue)) {
     Write-Output "Java no encontrado. Instalando..."
     winget install Microsoft.OpenJDK.21
@@ -66,3 +64,21 @@ function DescargarYConfigurarMods {
     Set-Location -Path $env:USERPROFILE
     Remove-Item -Path $tempDir -Recurse -Force
 }
+
+function InstalarFabric {
+    $minecraftVersion = "1.21.1"
+    $fabricInstallerPath = "$env:USERPROFILE\Downloads\fabric-installer.jar"
+    $minecraftDir = "$env:APPDATA\.minecraft"
+
+    if (-not (Test-Path "$minecraftDir\versions\$minecraftVersion-fabric")) {
+        Write-Output "Fabric not found. Installing..."
+        Invoke-WebRequest -Uri "https://maven.fabricmc.net/net/fabricmc/fabric-installer/0.11.2/fabric-installer-0.11.2.jar" -OutFile $fabricInstallerPath
+        java -jar $fabricInstallerPath client -mcversion $minecraftVersion -dir $minecraftDir
+        Remove-Item $fabricInstallerPath
+    } else {
+        Write-Output "Fabric found."
+    }
+}
+
+DescargarYConfigurarMods
+InstalarFabric
