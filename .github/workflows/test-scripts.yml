@@ -23,8 +23,8 @@ jobs:
 
       - name: Run Bash Script
         run: |
-          chmod +x install_farbic_mods_mac&linux.sh
-          ./install_farbic_mods_mac&linux.sh
+          chmod +x install_farbic_mods_mac_linux.sh
+          ./install_farbic_mods_mac_linux.sh
 
   test-windows:
     runs-on: windows-latest
