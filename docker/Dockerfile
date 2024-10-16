@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /minecraft_fabric_server_1.21
 
 # Descargamos el ejecutable del servidor Fabric
-RUN curl -OJ https://meta.fabricmc.net/v2/versions/loader/1.21/0.16.5/1.0.1/server/jar
+ADD https://meta.fabricmc.net/v2/versions/loader/1.21/0.16.5/1.0.1/server/jar fabric-server-mc.1.21-loader.0.16.5-launcher.1.0.1.jar
 
 # Aceptamos el EULA
 RUN echo "eula=true" > eula.txt
@@ -19,4 +19,4 @@ RUN echo "eula=true" > eula.txt
 EXPOSE 25565
 
 # Comando para iniciar el servidor
-CMD ["sh", "-c", "java -Xmx24G -jar fabric-server-mc.1.21-loader.0.16.5-launcher.1.0.1.jar nogui"]
+CMD ["java", "-Xmx24G", "-jar", "fabric-server-mc.1.21-loader.0.16.5-launcher.1.0.1.jar", "nogui"]

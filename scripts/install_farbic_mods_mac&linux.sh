@@ -66,25 +66,30 @@ descargar_y_configurar_mods() {
 # Función para instalar Fabric
 instalar_fabric() {
     local minecraft_version="1.21"
-    local fabric_version="0.14.21"
-    local fabric_installer="fabric-installer-$fabric_version.jar"
+    local fabric_installer="fabric-installer.jar"
     local minecraft_dir
 
     if [[ "$OSTYPE" == "darwin"* ]]; then
-        minecraft_dir="$HOME/Library/Application Support/minecraft"
+        minecraft_dir="$HOME/Library/Application Support/minecraft/versions/"
     elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
         minecraft_dir="$HOME/.minecraft"
     fi
 
-    if [ ! -d "$minecraft_dir/versions/${minecraft_version}-fabric-loader-${fabric_version}" ]; then
-        echo "Fabric $fabric_version para Minecraft $minecraft_version no está instalado. Procediendo con la instalación..."
-        cd ~/Downloads
-        curl -OJ "https://maven.fabricmc.net/net/fabricmc/fabric-installer/${fabric_version}/fabric-installer-${fabric_version}.jar"
-        java -jar "$fabric_installer" client -mcversion $minecraft_version
-        rm "$fabric_installer"
+    echo "Descargando el instalador de Fabric más reciente..."
+    cd ~/Downloads
+    curl -OJ "https://maven.fabricmc.net/net/fabricmc/fabric-installer/1.0.1/fabric-installer-1.0.1.jar"
+    mv fabric-installer-*.jar "$fabric_installer"
+
+    echo "Instalando Fabric para Minecraft $minecraft_version..."
+    java -jar "$fabric_installer" client -mcversion $minecraft_version -dir "$minecraft_dir"
+
+    if [ $? -eq 0 ]; then
+        echo "Fabric se ha instalado correctamente para Minecraft $minecraft_version."
     else
-        echo "Fabric ${fabric_version} para Minecraft ${minecraft_version} ya está instalado."
+        echo "Hubo un error al instalar Fabric. Por favor, verifica la versión de Minecraft y vuelve a intentarlo."
     fi
+
+    rm "$fabric_installer"
 }
 
 # Ejecutar funciones

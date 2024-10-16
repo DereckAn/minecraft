@@ -7,7 +7,8 @@ services:
     ports:
       - "25565:25565"
     volumes:
-      - ./data:/minecraft
+      # - ./data:/minecraft
+      - ./root/data-de-servers/fabric-1.21:/minecraft_fabric_server_1.21
     environment:
       - MINECRAFT_RAM=24G
     restart: unless-stopped
