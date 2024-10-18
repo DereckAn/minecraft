@@ -17,7 +17,7 @@ sudo sh -c "$(curl -fsSL https://raw.githubusercontent.com/DereckAn/minecraft/ma
 <h2 style="color: green;">Windows (PowerShell)</h2>
 
 ```
-iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/DereckAn/minecraft/main/scripts/install_fabric_mods_windows.bat'))
+iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/DereckAn/minecraft/main/scripts/install_fabric_mods_windows.ps1'))
 ```
 <br/>
 <br/>
