@@ -66,7 +66,7 @@ function DescargarYConfigurarMods {
 }
 
 function InstalarFabric {
-    $minecraftVersion = "1.21.1"
+    $minecraftVersion = "1.21"
     $fabricInstallerPath = "$env:USERPROFILE\Downloads\fabric-installer.jar"
     $minecraftDir = "$env:APPDATA\.minecraft"
 
