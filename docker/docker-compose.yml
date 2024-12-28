@@ -3,18 +3,13 @@ version: "3"
 services:
   minecraft:
     build: .
-    container_name: minecraft-fabric-server
+    container_name: 1.21.1-fabric-server
     ports:
       - "25565:25565"
     volumes:
-      # - ./data:/minecraft
-      - ./root/data-de-servers/fabric-1.21:/minecraft_fabric_server_1.21
+      - /root/data-de-servers/fabric-1.21.1:/minecraft_fabric_server_1.21.1
     environment:
       - MINECRAFT_RAM=24G
-    restart: unless-stopped
+    restart: on-failure:3   
     tty: true
     stdin_open: true
-
-volumes:
-  minecraft_data:
-    driver: local
