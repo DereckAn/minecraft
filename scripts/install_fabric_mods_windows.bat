@@ -40,27 +40,29 @@ if (-not (Get-Command java -ErrorAction SilentlyContinue)) {
 }
 
 function DescargarYConfigurarMods {
-    $modsDir = "$env:APPDATA\.minecraft\mods"
+    $downloadsDir = "$env:USERPROFILE\Downloads"
 
-    # Eliminar carpeta mods si existe y crear carpeta temporal
-    Remove-Item -Path "$env:USERPROFILE\Downloads\mods" -Recurse -Force -ErrorAction SilentlyContinue
+    # Eliminar carpetas si existen y crear carpeta temporal
+    Remove-Item -Path "$downloadsDir\mods" -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item -Path "$downloadsDir\client" -Recurse -Force -ErrorAction SilentlyContinue
+    Remove-Item -Path "$downloadsDir\resourcepacks" -Recurse -Force -ErrorAction SilentlyContinue
     $tempDir = "$env:USERPROFILE\Downloads\temp"
     New-Item -Path $tempDir -ItemType Directory -Force | Out-Null
     Set-Location -Path $tempDir
 
-    # Descargar mods
+    # Descargar mods, client y resourcepacks
     git init
     git remote add origin https://github.com/DereckAn/minecraft.git
     git config core.sparseCheckout true
-    git sparse-checkout set mods
+    echo "mods/*`nclient/*`nresourcepacks/*" | Out-File -FilePath ".git/info/sparse-checkout" -Encoding ASCII
     git pull origin main
 
-    # Eliminar mods existentes
-    Remove-Item -Path "$modsDir\*" -Recurse -Force -ErrorAction SilentlyContinue
+    # Mover carpetas a Downloads
+    Move-Item -Path "mods" -Destination $downloadsDir
+    Move-Item -Path "client" -Destination $downloadsDir
+    Move-Item -Path "resourcepacks" -Destination $downloadsDir
 
-    # Mover mods y limpiar
-    New-Item -Path $modsDir -ItemType Directory -Force | Out-Null
-    Move-Item -Path "mods/*" -Destination $modsDir
+    # Limpiar
     Set-Location -Path $env:USERPROFILE
     Remove-Item -Path $tempDir -Recurse -Force
 }
